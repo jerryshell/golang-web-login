@@ -2,12 +2,14 @@ package main
 
 import (
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
 	"jerryshell.cn/login_demo/dao"
+	"jerryshell.cn/login_demo/domain"
 	"jerryshell.cn/login_demo/session"
 )
 
@@ -16,6 +18,7 @@ func init() {
 	http.HandleFunc("/login", login)
 	http.HandleFunc("/userinfo", userinfo)
 	http.HandleFunc("/logout", logout)
+	http.HandleFunc("/register", register)
 }
 
 func main() {
@@ -75,6 +78,38 @@ func userinfo(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles("html/userinfo.html")
 	checkError(err)
 	t.Execute(w, user)
+}
+
+func register(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		registerFile, err := ioutil.ReadFile("html/register.html")
+		checkError(err)
+		w.Write(registerFile)
+		return
+	}
+
+	username := r.FormValue("username")
+	password := r.FormValue("password")
+	password2 := r.FormValue("password2")
+	email := r.FormValue("email")
+
+	if checkEmpty(username, password, password2, email) {
+		message(w, r, "字段不能为空")
+		return
+	}
+
+	if password != password2 {
+		message(w, r, "两次密码不相符")
+		return
+	}
+
+	user := &domain.User{
+		Username: username,
+		Password: password,
+		Email:    email,
+	}
+	dao.AddUser(user)
+	message(w, r, "注册成功！")
 }
 
 func logout(w http.ResponseWriter, r *http.Request) {
