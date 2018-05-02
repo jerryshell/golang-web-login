@@ -10,9 +10,3 @@ Golang 用户登录 Demo
 - [x] 注销
 - [x] 注册
 - [ ] 更新信息
-
-# 建表语句
-
-```sql
-CREATE TABLE `user` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `email` TEXT )
-```
