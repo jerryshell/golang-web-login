@@ -10,6 +10,17 @@ import (
 const createUserTable = "CREATE TABLE `user` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `email` TEXT )"
 
 func init() {
+	initEnv()
+
+	AddUser(&domain.User{
+		ID:       1,
+		Username: "admin",
+		Password: "admin",
+		Email:    "admin@admin.com",
+	})
+}
+
+func initEnv() {
 	db, err := sql.Open("sqlite3", "./user.db")
 	checkError(err)
 	defer db.Close()
