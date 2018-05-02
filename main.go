@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
 	"jerryshell.cn/login_demo/dao"
@@ -35,10 +36,13 @@ func login(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", 302)
 		return
 	}
-	r.ParseForm()
-	username := r.Form.Get("username")
-	password := r.Form.Get("password")
+	username := r.FormValue("username")
+	password := r.FormValue("password")
 	log.Println("login", username, password)
+	if checkEmpty(username, password) {
+		message(w, r, "字段不能为空")
+		return
+	}
 
 	user := dao.FindUserByUsernameAndPassword(username, password)
 	if user == nil {
@@ -83,4 +87,16 @@ func checkError(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func checkEmpty(strs ...string) (isEmpty bool) {
+	for _, str := range strs {
+		str = strings.TrimSpace(str)
+		if str == "" || len(str) == 0 {
+			isEmpty = true
+			return
+		}
+	}
+	isEmpty = false
+	return
 }
