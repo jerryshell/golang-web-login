@@ -7,17 +7,13 @@ import (
 	"jerryshell.cn/login_demo/domain"
 )
 
-const createUserTable = "CREATE TABLE `user` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `email` TEXT )"
+const createUserTable = "CREATE TABLE `user` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `email` TEXT );"
+
+const createAdmin = "INSERT INTO user(id, username, password, email) VALUES(1, 'admin', 'admin', 'admin@admin.com');"
 
 func init() {
 	initEnv()
-
-	AddUser(&domain.User{
-		ID:       1,
-		Username: "admin",
-		Password: "admin",
-		Email:    "admin@admin.com",
-	})
+	initAdmin()
 }
 
 func initEnv() {
@@ -26,6 +22,14 @@ func initEnv() {
 	defer db.Close()
 
 	db.Exec(createUserTable)
+}
+
+func initAdmin() {
+	db, err := sql.Open("sqlite3", "./user.db")
+	checkError(err)
+	defer db.Close()
+
+	db.Exec(createAdmin)
 }
 
 func getDB() (db *sql.DB) {
