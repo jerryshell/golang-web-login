@@ -9,20 +9,27 @@
 </head>
 
 <body>
-    <table>
-        <tr>
-            <td>用户名</td>
-            <td>{{.Username}}</td>
-        </tr>
-        <tr>
-            <td>密码</td>
-            <td>{{.Password}}</td>
-        </tr>
-        <tr>
-            <td>邮箱</td>
-            <td>{{.Email}}</td>
-        </tr>
-    </table>
+    <form action="/userinfo" method="post">
+        <table>
+            <tr>
+                <td>ID</td>
+                <td>{{.ID}}</td>
+            </tr>
+            <tr>
+                <td>用户名</td>
+                <td><input type="text" name="username" value="{{.Username}}"></td>
+            </tr>
+            <tr>
+                <td>密码</td>
+                <td><input type="text" name="password"></td>
+            </tr>
+            <tr>
+                <td>邮箱</td>
+                <td><input type="text" name="email" value="{{.Email}}"></td>
+            </tr>
+        </table>
+        <input type="submit" value="更新">
+    </form>
     <a href="/">返回首页</a>
     <a href="/logout">注销</a>
 </body>

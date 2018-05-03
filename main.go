@@ -77,9 +77,35 @@ func userinfo(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", 302)
 		return
 	}
-	t, err := template.ParseFiles("html/userinfo.html")
-	checkError(err)
-	t.Execute(w, user)
+
+	if r.Method == "GET" {
+		t, err := template.ParseFiles("html/userinfo.html")
+		checkError(err)
+		err = t.Execute(w, user)
+		checkError(err)
+		return
+	}
+
+	// POST 更新用户信息
+	username := r.FormValue("username")
+	password := r.FormValue("password")
+	email := r.FormValue("email")
+
+	if isEmpty(username, password, email) {
+		message(w, r, "字段不能为空")
+		return
+	}
+
+	switch user := user.(type) {
+	case *domain.User:
+		user.Username = username
+		user.Password = password
+		user.Email = email
+		dao.UpdateUser(user)
+	default:
+		log.Println(":userinfo:user.(type)", user)
+	}
+	http.Redirect(w, r, "/userinfo", 302)
 }
 
 func register(w http.ResponseWriter, r *http.Request) {
