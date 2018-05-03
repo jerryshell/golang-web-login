@@ -46,7 +46,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 	log.Println("login", username, password)
-	if checkEmpty(username, password) {
+	if isEmpty(username, password) {
 		message(w, r, "字段不能为空")
 		return
 	}
@@ -95,7 +95,7 @@ func register(w http.ResponseWriter, r *http.Request) {
 	password2 := r.FormValue("password2")
 	email := r.FormValue("email")
 
-	if checkEmpty(username, password, password2, email) {
+	if isEmpty(username, password, password2, email) {
 		message(w, r, "字段不能为空")
 		return
 	}
@@ -126,7 +126,7 @@ func checkError(err error) {
 	}
 }
 
-func checkEmpty(strs ...string) (isEmpty bool) {
+func isEmpty(strs ...string) (isEmpty bool) {
 	for _, str := range strs {
 		str = strings.TrimSpace(str)
 		if str == "" || len(str) == 0 {
