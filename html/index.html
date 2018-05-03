@@ -9,9 +9,13 @@
 </head>
 
 <body>
+    {{if .Username}}
+    <a href="/userinfo">用户信息</a>
+    <a href="/logout">注销</a>
+    {{else}}
     <a href="/login">登录</a>
     <a href="/register">注册</a>
-    <a href="/userinfo">用户信息</a>
+    {{end}}
     <br>
     <h1>欢迎，{{if .Username }}{{.Username}}{{else}}游客{{end}}</h1>
 </body>
