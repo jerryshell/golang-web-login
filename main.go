@@ -59,7 +59,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	// 登陆成功
 	sess := session.GetSession(w, r)
 	sess.SetAttr("user", user)
-	http.Redirect(w, r, "/userinfo", 302)
+	http.Redirect(w, r, "/", 302)
 }
 
 func message(w http.ResponseWriter, r *http.Request, message string) {
