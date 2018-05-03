@@ -27,16 +27,20 @@ func main() {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("html/login.html")
+	user, _ := session.GetSession(w, r).GetAttr("user")
+
+	t, err := template.ParseFiles("html/index.html")
 	checkError(err)
 
-	err = t.Execute(w, nil)
+	err = t.Execute(w, user)
 	checkError(err)
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
-		http.Redirect(w, r, "/", 302)
+		loginHTML, err := ioutil.ReadFile("html/login.html")
+		checkError(err)
+		w.Write(loginHTML)
 		return
 	}
 	username := r.FormValue("username")
@@ -62,9 +66,7 @@ func message(w http.ResponseWriter, r *http.Request, message string) {
 	t, err := template.ParseFiles("html/message.html")
 	checkError(err)
 
-	data := make(map[string]string)
-	data["Message"] = message
-	err = t.Execute(w, data)
+	err = t.Execute(w, map[string]string{"Message": message})
 	checkError(err)
 }
 
@@ -82,9 +84,9 @@ func userinfo(w http.ResponseWriter, r *http.Request) {
 
 func register(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
-		registerFile, err := ioutil.ReadFile("html/register.html")
+		registerHTML, err := ioutil.ReadFile("html/register.html")
 		checkError(err)
-		w.Write(registerFile)
+		w.Write(registerHTML)
 		return
 	}
 
