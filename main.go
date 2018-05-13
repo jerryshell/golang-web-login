@@ -8,9 +8,10 @@ import (
 	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
-	"jerryshell.cn/login_demo/dao"
-	"jerryshell.cn/login_demo/domain"
-	"jerryshell.cn/login_demo/session"
+
+	"github.com/JerryLi-X/login_demo/dao"
+	"github.com/JerryLi-X/login_demo/domain"
+	"github.com/JerryLi-X/login_demo/session"
 )
 
 func init() {

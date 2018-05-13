@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"log"
 
-	"jerryshell.cn/login_demo/domain"
+	"github.com/JerryLi-X/login_demo/domain"
 )
 
 const createUserTable = "CREATE TABLE `user` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `email` TEXT );"
