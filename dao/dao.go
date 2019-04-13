@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/JerryLi-X/login_demo/domain"
+	"../domain"
 )
 
 const createUserTable = "CREATE TABLE `user` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `username` TEXT NOT NULL, `password` TEXT NOT NULL, `email` TEXT );"

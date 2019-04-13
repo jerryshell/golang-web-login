@@ -9,9 +9,9 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 
-	"github.com/JerryLi-X/login_demo/dao"
-	"github.com/JerryLi-X/login_demo/domain"
-	"github.com/JerryLi-X/login_demo/session"
+	"./dao"
+	"./domain"
+	"./session"
 )
 
 func init() {
