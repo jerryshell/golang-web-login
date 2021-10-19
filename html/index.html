@@ -3,18 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>首页</title>
 </head>
 
 <body>
 {{if .Username}}
-    <a href="/userinfo">用户信息</a>
-    <a href="/logout">注销</a>
+<a href="/userinfo">用户信息</a>
+<a href="/logout">注销</a>
 {{else}}
-    <a href="/login">登录</a>
-    <a href="/register">注册</a>
+<a href="/login">登录</a>
+<a href="/register">注册</a>
 {{end}}
 <br>
 <h1>欢迎，{{if .Username }}{{.Username}}{{else}}游客{{end}}</h1>

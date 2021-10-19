@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>用户信息</title>
 </head>
 
@@ -17,15 +17,15 @@
         </tr>
         <tr>
             <td>用户名</td>
-            <td><input type="text" name="username" value="{{.Username}}"></td>
+            <td><input name="username" type="text" value="{{.Username}}"></td>
         </tr>
         <tr>
             <td>密码</td>
-            <td><input type="text" name="password"></td>
+            <td><input name="password" type="text"></td>
         </tr>
         <tr>
             <td>邮箱</td>
-            <td><input type="text" name="email" value="{{.Email}}"></td>
+            <td><input name="email" type="text" value="{{.Email}}"></td>
         </tr>
     </table>
     <input type="submit" value="更新">

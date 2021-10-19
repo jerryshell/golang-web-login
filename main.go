@@ -9,9 +9,9 @@ import (
 
 	_ "github.com/mattn/go-sqlite3"
 
-	"./dao"
-	"./domain"
-	"./session"
+	"github.com/jerryshell/golang-web-login/dao"
+	"github.com/jerryshell/golang-web-login/domain"
+	"github.com/jerryshell/golang-web-login/session"
 )
 
 func init() {
@@ -41,9 +41,15 @@ func login(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		loginHTML, err := ioutil.ReadFile("html/login.html")
 		checkError(err)
-		w.Write(loginHTML)
+
+		_, err = w.Write(loginHTML)
+		if err != nil {
+			log.Println(err)
+		}
+
 		return
 	}
+
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 	log.Println("login", username, password)
@@ -57,6 +63,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		message(w, r, "登录失败！")
 		return
 	}
+
 	// 登陆成功
 	sess := session.GetSession(w, r)
 	sess.SetAttr("user", user)
@@ -91,7 +98,6 @@ func userinfo(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 	email := r.FormValue("email")
-
 	if isEmpty(username, password, email) {
 		message(w, r, "字段不能为空")
 		return
@@ -104,8 +110,9 @@ func userinfo(w http.ResponseWriter, r *http.Request) {
 		user.Email = email
 		dao.UpdateUser(user)
 	default:
-		log.Println(":userinfo:user.(type)", user)
+		log.Println(":userinfo: user.(type)", user)
 	}
+
 	http.Redirect(w, r, "/userinfo", 302)
 }
 
@@ -113,7 +120,13 @@ func register(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		registerHTML, err := ioutil.ReadFile("html/register.html")
 		checkError(err)
-		w.Write(registerHTML)
+
+		_, err = w.Write(registerHTML)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+
 		return
 	}
 
@@ -153,8 +166,8 @@ func checkError(err error) {
 	}
 }
 
-func isEmpty(strs ...string) (isEmpty bool) {
-	for _, str := range strs {
+func isEmpty(strSlice ...string) (isEmpty bool) {
+	for _, str := range strSlice {
 		str = strings.TrimSpace(str)
 		if str == "" || len(str) == 0 {
 			isEmpty = true

@@ -38,11 +38,11 @@ var sessionMap = make(map[string]*Session)
 
 // GetSession 从 http.Request 中获取 Session
 func GetSession(w http.ResponseWriter, r *http.Request) (session *Session) {
-	cookie, _ := r.Cookie("SESSIONID")
+	cookie, _ := r.Cookie("SESSION_ID")
 	session = sessionMap[cookie.String()]
 	if session == nil {
 		// session 不存在，创建新的 Session 和 Cookie
-		cookie = &http.Cookie{Name: "SESSIONID", Value: generateSessionID()}
+		cookie = &http.Cookie{Name: "SESSION_ID", Value: generateSessionID()}
 		http.SetCookie(w, cookie)
 		session = &Session{attrMap: make(map[string]interface{})}
 		sessionMap[cookie.String()] = session
